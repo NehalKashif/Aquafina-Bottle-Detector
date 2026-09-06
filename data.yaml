@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['Aquafina']
+
+roboflow:
+  workspace: nehal-kashif
+  project: aquafina-xq1xa-rq5ll
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/nehal-kashif/aquafina-xq1xa-rq5ll/dataset/1
