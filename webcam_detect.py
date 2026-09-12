@@ -32,7 +32,7 @@ while True:
         break
 
     # Run detection on the current frame
-    results = model.predict(source=frame, conf=0.3, verbose=False)
+    results = model.predict(source=frame, conf=0.2, verbose=False)
 
     # results[0].plot() draws boxes/labels directly onto the frame for us
     annotated_frame = results[0].plot()
