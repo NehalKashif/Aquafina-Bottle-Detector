@@ -1,2 +1,14 @@
 aquafina/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+.idea/
+.vscode/
+captures/*
+!captures/.gitkeep
+onnx-test/
+__pycache__/**/*
 captures/

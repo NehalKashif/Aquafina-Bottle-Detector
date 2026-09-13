@@ -43,7 +43,7 @@ def test_camera_start_stop_does_not_require_hardware(tmp_path):
 
 def test_config_paths_are_project_relative():
     import config
-    assert config.MODEL_PATH == Path(config.__file__).resolve().parent / 'best.pt'
+    assert config.MODEL_PATH == Path(config.__file__).resolve().parent / 'best.onnx'
 
 
 def test_capture_creates_capture_directory(tmp_path):

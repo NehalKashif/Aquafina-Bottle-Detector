@@ -1,47 +1,28 @@
-"""
-Real-time Aquafina bottle detection using your trained YOLOv8 model and a webcam.
-
-Run this LOCALLY (not in Colab) — it needs direct access to your machine's webcam.
-
-Usage:
-    python webcam_detect.py
-"""
-
-from ultralytics import YOLO
+"""Run the ONNX Aquafina detector against a local webcam."""
 import cv2
 
-# Path to your downloaded trained model
-MODEL_PATH = "best.pt"  # update this if you place it elsewhere
+import config
+from services.detector import AquafinaDetector
 
-# Load the trained model
-model = YOLO(MODEL_PATH)
+detector = AquafinaDetector(config.MODEL_PATH, config.CONFIDENCE_THRESHOLD)
+if not detector.ready:
+    raise SystemExit(detector.error or "The detection model is not ready.")
 
-# Open the default webcam (0 = first connected camera)
-cap = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(config.CAMERA_INDEX)
+if not camera.isOpened():
+    raise SystemExit("Could not open webcam. Check that it is connected and not in use.")
 
-if not cap.isOpened():
-    print("ERROR: Could not open webcam. Check that it's connected and not in use by another app.")
-    exit()
-
-print("Webcam started. Press 'q' to quit.")
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("ERROR: Failed to grab frame from webcam.")
-        break
-
-    # Run detection on the current frame
-    results = model.predict(source=frame, conf=0.2, verbose=False)
-
-    # results[0].plot() draws boxes/labels directly onto the frame for us
-    annotated_frame = results[0].plot()
-
-    cv2.imshow("Aquafina Detector - Press 'q' to quit", annotated_frame)
-
-    # Exit when 'q' is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+try:
+    print("Webcam started. Press 'q' to quit.")
+    while True:
+        success, frame = camera.read()
+        if not success:
+            print("Failed to read a frame from the webcam.")
+            break
+        annotated_frame, _ = detector.detect(frame)
+        cv2.imshow("Aquafina Detector - Press 'q' to quit", annotated_frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+finally:
+    camera.release()
+    cv2.destroyAllWindows()

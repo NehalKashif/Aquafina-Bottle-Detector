@@ -61,7 +61,11 @@ class CameraService:
             if not success or frame is None:
                 self.error = "Unable to read a frame from the webcam."
                 return None
-            annotated, detections = self.detector.detect(frame)
+            try:
+                annotated, detections = self.detector.detect(frame)
+            except Exception as exc:
+                self.error = f"Detection failed: {exc}"
+                return None
             self.last_frame = annotated.copy()
             self.last_detections = detections
             self.error = None
