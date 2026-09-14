@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "check": "node --check static/js/app.js"
+  },
+  "dependencies": {
+    "onnxruntime-web": "^1.27.0"
+  }
+}

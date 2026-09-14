@@ -12,3 +12,4 @@ captures/*
 onnx-test/
 __pycache__/**/*
 captures/
+node_modules/
