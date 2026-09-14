@@ -1,6 +1,6 @@
 const MODEL_URL = '/static/models/best.onnx';
 const INPUT_SIZE = 640;
-const CONFIDENCE_THRESHOLD = 0.75;
+const CONFIDENCE_THRESHOLD = 0.60;
 const NMS_IOU_THRESHOLD = 0.45;
 const CLASS_NAME = 'Aquafina';
 const INFERENCE_INTERVAL_MS = 75;
